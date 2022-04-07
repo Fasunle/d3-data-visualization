@@ -21,20 +21,19 @@ const mouthArc = arc()({
   startAngle: Math.PI / 2
 })?.toString()
 
-// console.log(mouthArc)
 type EyeType =  {
   OffsetX:number; 
   OffsetY:number; 
-  radius:number; 
-  fill:string;
+  radius?:number; 
+  fill?:string;
   right: boolean;
 }
 
 const Eye = (eye:EyeType) => <circle 
           cx={eye.right ? eye.OffsetX: -eye.OffsetX } 
           cy={-eye.OffsetY}
-          r={eye.radius}
-          fill={eye.fill} 
+          r={eye.radius || 0.30 * (eye.OffsetX + eyeOffsetY)}
+          fill={eye.fill || "black"} 
         />;
 
 function App() {
@@ -43,8 +42,6 @@ function App() {
       <svg width={width} height={height} >
         <g transform={`translate(${centerX},${centerY})`}>
           <circle 
-            // cx={centerX} 
-            // cy={centerY}
             r={radius}
             fill="yellow" 
             stroke='black' 
@@ -54,15 +51,11 @@ function App() {
           <Eye 
             OffsetX={eyeOffsetX}
             OffsetY={eyeOffsetY}
-            radius={eyeRadius}
-            fill="black"
             right={false}
           />
           <Eye 
             OffsetX={eyeOffsetX}
             OffsetY={eyeOffsetY}
-            radius={eyeRadius}
-            fill="black"
             right={true}
           />
           <path d={mouthArc}/>
