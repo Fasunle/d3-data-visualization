@@ -1,5 +1,5 @@
-import {BackgroundCircle, Eye, FaceContainer,Mouth} from './components';
 import './App.css';
+import { Face } from './components';
 
 const width = 960;
 const height = 500;
@@ -13,20 +13,16 @@ const mouthRadius = 130;
 function App() {
   return (
     <div className="App">
-      <FaceContainer height={height} width={width}>
-          <BackgroundCircle radius={radius}/>
-          <Eye 
-            OffsetX={eyeOffsetX}
-            OffsetY={eyeOffsetY}
-            right={false}
-          />
-          <Eye 
-            OffsetX={eyeOffsetX}
-            OffsetY={eyeOffsetY}
-            right={true}
-          />
-          <Mouth radius={mouthRadius} width={mouthWidth} />
-        </FaceContainer>
+      <Face 
+        height={height}
+        width={width}
+        eyeOffSetX={eyeOffsetX}
+        eyeOffSetY={eyeOffsetY}
+        mouthRadius={mouthRadius}
+        mouthWidth={mouthWidth}
+        radius={radius}
+        />
+
     </div>
   );
 }
