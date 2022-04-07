@@ -1,4 +1,4 @@
-import {arc} from "d3-shape";     // handles various shapes in d3
+import {BackgroundCircle, Eye, Mouth} from './components';
 import './App.css';
 
 const width = 960;
@@ -12,56 +12,6 @@ const eyeOffsetX = 100;
 const eyeOffsetY = 50;
 const mouthWidth = 20;
 const mouthRadius = 130;
-
-
-
-type EyeType =  {
-  OffsetX:number; 
-  OffsetY:number; 
-  radius?:number; 
-  fill?:string;
-  right: boolean;
-}
-
-type TBackgroundCircle = {
-  radius: number,
-  strokeWidth?:number,
-  strokeColor?: string,
-  bgColor?:string
-}
-
-type TMouth = {
-  radius: number,
-  width: number
-}
-
-const Eye = (eye:EyeType) => <circle 
-          cx={eye.right ? eye.OffsetX: -eye.OffsetX } 
-          cy={-eye.OffsetY}
-          r={eye.radius || 0.30 * (eye.OffsetX + eyeOffsetY)}
-          fill={eye.fill || "black"} 
-        />;
-
-const BackgroundCircle = ({radius, strokeColor, bgColor, strokeWidth}: TBackgroundCircle) => (
-  <circle 
-    r={radius}
-    fill={bgColor || "yellow"} 
-    stroke={strokeColor || 'black'} 
-    strokeWidth={strokeWidth || 0}
-  />
-  );
-
-const Mouth = ({radius, width}: TMouth) => {
-  // arc generates a function which is used to build the arc. This generated function accept data object
-  const mouthArc = arc()({
-    endAngle: Math.PI * 3/2,
-    innerRadius: radius, 
-    outerRadius: radius + width,
-    startAngle: Math.PI / 2
-  })?.toString()
-  
-  return (<path d={mouthArc}/>);
-}
 
 function App() {
   return (
