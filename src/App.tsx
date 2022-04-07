@@ -13,13 +13,7 @@ const eyeOffsetY = 50;
 const mouthWidth = 20;
 const mouthRadius = 130;
 
-// arc generates a function which is used to build the arc. This generated function accept data object
-const mouthArc = arc()({
-  endAngle:Math.PI * 3/2,
-  innerRadius:mouthRadius, 
-  outerRadius:mouthRadius+mouthWidth,
-  startAngle: Math.PI / 2
-})?.toString()
+
 
 type EyeType =  {
   OffsetX:number; 
@@ -29,6 +23,18 @@ type EyeType =  {
   right: boolean;
 }
 
+type TBackgroundCircle = {
+  radius: number,
+  strokeWidth?:number,
+  strokeColor?: string,
+  bgColor?:string
+}
+
+type TMouth = {
+  radius: number,
+  width: number
+}
+
 const Eye = (eye:EyeType) => <circle 
           cx={eye.right ? eye.OffsetX: -eye.OffsetX } 
           cy={-eye.OffsetY}
@@ -36,18 +42,33 @@ const Eye = (eye:EyeType) => <circle
           fill={eye.fill || "black"} 
         />;
 
+const BackgroundCircle = ({radius, strokeColor, bgColor, strokeWidth}: TBackgroundCircle) => (
+  <circle 
+    r={radius}
+    fill={bgColor || "yellow"} 
+    stroke={strokeColor || 'black'} 
+    strokeWidth={strokeWidth || 0}
+  />
+  );
+
+const Mouth = ({radius, width}: TMouth) => {
+  // arc generates a function which is used to build the arc. This generated function accept data object
+  const mouthArc = arc()({
+    endAngle: Math.PI * 3/2,
+    innerRadius: radius, 
+    outerRadius: radius + width,
+    startAngle: Math.PI / 2
+  })?.toString()
+  
+  return (<path d={mouthArc}/>);
+}
+
 function App() {
   return (
     <div className="App">
       <svg width={width} height={height} >
         <g transform={`translate(${centerX},${centerY})`}>
-          <circle 
-            r={radius}
-            fill="yellow" 
-            stroke='black' 
-            strokeWidth={strokeOffset}
-          />
-          
+          <BackgroundCircle radius={radius}/>
           <Eye 
             OffsetX={eyeOffsetX}
             OffsetY={eyeOffsetY}
@@ -58,7 +79,7 @@ function App() {
             OffsetY={eyeOffsetY}
             right={true}
           />
-          <path d={mouthArc}/>
+          <Mouth radius={mouthRadius} width={mouthWidth} />
         </g>
       </svg>
     </div>
