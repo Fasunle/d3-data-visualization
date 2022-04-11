@@ -1,3 +1,3 @@
 # Data Visualization with D3
 
-Hello World
+Displays a black circle which can move based on the movement of the mouse
